@@ -3,7 +3,6 @@ function love.load()
   require 'player'
   require 'enemy'
   require 'bullet'
-  love.window.setTitle('Shoot the Enemy')
 
   p = Player()
   e = Enemy()
