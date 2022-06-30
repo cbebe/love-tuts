@@ -9,17 +9,24 @@ function Bullet:new(x, y)
   self.height = self.image:getHeight()
 end
 
+function Bullet:checkCollision(obj)
+  local s_left, s_right, s_top, s_bottom =
+    self.x, self.x + self.width, self.y, self.y + self.height
+  local o_left, o_right, o_top, o_bottom =
+    obj.x, obj.x + obj.width, obj.y, obj.y + obj.height
+
+  if s_right > o_left and s_left < o_right and s_bottom > o_top and s_top < o_bottom then
+    self.dead = true
+    local increase = obj.speed > 0 and 50 or -50
+    obj.speed = obj.speed + increase
+  end
+end
+
 function Bullet:update(dt)
   self.y = self.y + self.speed * dt
 
-  local window_width = love.graphics.getWidth()
-
-  if self.x < 0 then
-    self.x = 0
-    self.speed = -self.speed
-  elseif self.x + self.width > window_width then
-    self.x = window_width - self.width
-    self.speed = -self.speed
+  if self.y > love.graphics.getHeight() then
+    love.load()
   end
 end
 

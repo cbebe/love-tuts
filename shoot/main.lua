@@ -20,6 +20,11 @@ function love.update(dt)
 
   for i,v in ipairs(bulletList) do
     v:update(dt)
+    v:checkCollision(e)
+
+    if v.dead then
+      table.remove(bulletList, i)
+    end
   end
 end
 
