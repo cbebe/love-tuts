@@ -1,35 +1,19 @@
 function love.load()
-  fruits = { "apple", "orange", "banana" }
-  idx = 1
-  x = 100
-  y = 50
+  Object = require'classic'
+  require 'shape'
+  require 'rectangle'
+  require 'circle'
+
+  r1 = Rectangle(100, 100, 200, 50)
+  r2 = Circle(350, 80, 40)
 end
 
 function love.update(dt)
-  if love.keyboard.isDown("1") then
-    idx = idx + 1
-    if idx > table.getn(fruits) then
-      idx = 1
-    end
-
-  elseif love.keyboard.isDown("2") then
-    idx = idx - 1
-    if idx < 1 then
-      idx = table.getn(fruits)
-    end
-  end
-  if love.keyboard.isDown("right") then
-      x = x + 100 * dt
-  elseif love.keyboard.isDown("left") then
-      x = x - 100 * dt
-  elseif love.keyboard.isDown("down") then
-      y = y + 100 * dt
-  elseif love.keyboard.isDown("up") then
-      y = y - 100 * dt
-  end
+  r1:update(dt)
+  r2:update(dt)
 end
 
 function love.draw()
-  love.graphics.rectangle("line", x, y, 200, 150)
-  love.graphics.print(fruits[idx], 100, 100)
+  r1:draw()
+  r2:draw()
 end
