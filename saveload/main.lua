@@ -1,4 +1,5 @@
 function love.load()
+  lume = require 'lume'
   player = {
     x = 100,
     y = 100,
@@ -7,6 +8,26 @@ function love.load()
   }
 
   coins = {}
+  if love.filesystem.getInfo("savedata.txt") then
+    loadFile()
+  else
+    generateCoins()
+  end
+end
+
+function loadFile()
+  file = love.filesystem.read("savedata.txt")
+  data = lume.deserialize(file)
+  player.x = data.player.x
+  player.y = data.player.y
+  player.size = data.player.size
+  coinImage = love.graphics.newImage('dollar.png')
+  for i,v in ipairs(data.coins) do
+    coins[i] = { x = v.x, y = v.y, image = coinImage }
+  end
+end
+
+function generateCoins()
   for i=1,25 do
     table.insert(coins, {
       x = love.math.random(50 ,650),
@@ -53,5 +74,25 @@ function love.draw()
 
   for i,v in ipairs(coins) do
     drawObj(v)
+  end
+end
+
+function saveGame()
+  data = {}
+  data.player = { x = player.x, y = player.y, size = player.size }
+  data.coins = {}
+  for i,v in ipairs(coins) do
+    data.coins[i] = { x = v.x, y = v.y }
+  end
+  serialized = lume.serialize(data)
+  love.filesystem.write('savedata.txt', serialized)
+end
+
+function love.keypressed(key)
+  if key == 'f1' then
+    saveGame()
+  elseif key == "f2" then
+    love.filesystem.remove("savedata.txt")
+    love.event.quit("restart")
   end
 end
