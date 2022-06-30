@@ -6,6 +6,16 @@ function Player:new()
   self.y = 20
   self.speed = 500
   self.width = self.image:getWidth()
+  self.height = self.image:getHeight()
+end
+
+function Player:keyPressed(key)
+  if key == 'space' then
+    table.insert(
+      bulletList,
+      Bullet(self.x + self.width / 2, self.y + self.height)
+    )
+  end
 end
 
 function Player:update(dt)
