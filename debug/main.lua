@@ -17,12 +17,12 @@ function love.draw()
     end
 end
 
-function love.keypressed()
+function love.keypressed(key)
     if key == "space" then
         shoot()
     end
 end
 
 function shoot()
-    table.insert(bullets, {circle.x, circle.y})
+    table.insert(bullets, { x = circle.x, y = circle.y })
 end
