@@ -1,4 +1,5 @@
-Entity = Object:extend()
+local Object = require 'classic'
+local Entity = Object:extend()
 
 function Entity:new(x, y, size, image)
   self.x = x
@@ -19,3 +20,4 @@ function Entity:checkCollision(target)
   ) < self.size + target.size
 end
 
+return Entity

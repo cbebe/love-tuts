@@ -1,7 +1,9 @@
-Player = Entity:extend()
+local Entity = require 'entity'
+local Player = Entity:extend()
 
-function Player:new(x, y, size, image)
+function Player:new(x, y, size, image, controls)
   Player.super.new(self, x, y, size, image)
+  self.controls = controls
   self.shake = {
     duration = 0,
     wait = 0,
@@ -22,15 +24,15 @@ function Player:update(dt)
     end
   end
 
-  if love.keyboard.isDown('left') then
+  if love.keyboard.isDown(self.controls.left) then
     self.x = self.x - 200 * dt
-  elseif love.keyboard.isDown('right') then
+  elseif love.keyboard.isDown(self.controls.right) then
     self.x = self.x + 200 * dt
   end
 
-  if love.keyboard.isDown('up') then
+  if love.keyboard.isDown(self.controls.up) then
     self.y = self.y - 200 * dt
-  elseif love.keyboard.isDown('down') then
+  elseif love.keyboard.isDown(self.controls.down) then
     self.y = self.y + 200 * dt
   end
 end
@@ -38,8 +40,8 @@ end
 function Player:checkCoin(coin)
   local collide = self:checkCollision(coin)
   if collide then
-    self.size = player.size + 1
-    self.score = player.score + 1
+    self.size = self.size + 1
+    self.score = self.score + 1
     self.shake.duration = 0.15
   end
 
@@ -47,7 +49,6 @@ function Player:checkCoin(coin)
 end
 
 function Player:draw()
-  love.graphics.translate(-self.x + 400, -self.y + 300)
   if self.shake.duration > 0 then
     love.graphics.translate(self.shake.offset.x, self.shake.offset.y)
   end
@@ -70,3 +71,5 @@ function Player:save()
     score = self.score
   }
 end
+
+return Player
