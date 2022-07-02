@@ -1,3 +1,9 @@
+local objects
+local map
+local walls
+
+local tinsert = table.insert
+
 function love.load()
   local Player = require 'player'
   local Wall = require 'wall'
@@ -7,8 +13,8 @@ function love.load()
   local box = Box(550, 150)
 
   objects = {}
-  table.insert(objects, player)
-  table.insert(objects, box)
+  tinsert(objects, player)
+  tinsert(objects, box)
 
   map = {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -29,7 +35,7 @@ function love.load()
   for i,v in ipairs(map) do
     for j,w in ipairs(v) do
       if w == 1 then
-        table.insert(walls, Wall((j-1)*50, (i-1)*50))
+        tinsert(walls, Wall((j-1)*50, (i-1)*50))
       end
     end
   end
@@ -37,11 +43,11 @@ function love.load()
 end
 
 function love.update(dt)
-  for i,v in ipairs(objects) do
+  for _,v in ipairs(objects) do
     v:update(dt)
   end
 
-  for i,v in ipairs(walls) do
+  for _,v in ipairs(walls) do
     v:update(dt)
   end
 
@@ -60,8 +66,8 @@ function love.update(dt)
       end
     end
 
-    for i,wall in ipairs(walls) do
-      for j,object in ipairs(objects) do
+    for _,wall in ipairs(walls) do
+      for _,object in ipairs(objects) do
         local collision = object:resolveCollision(wall)
         if collision then
           loop = true
@@ -78,10 +84,10 @@ function love.keypressed(key)
 end
 
 function love.draw()
-  for i,v in ipairs(objects) do
+  for _,v in ipairs(objects) do
     v:draw()
   end
-  for i,v in ipairs(walls) do
+  for _,v in ipairs(walls) do
     v:draw()
   end
 end

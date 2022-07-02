@@ -1,7 +1,7 @@
 Player = Object:extend()
 
 function Player:new()
-  self.image = love.graphics.newImage 'panda.png'
+  self.image = love.graphics.newImage('panda.png', nil)
   self.x = 300
   self.y = 20
   self.speed = 500
@@ -9,7 +9,7 @@ function Player:new()
   self.height = self.image:getHeight()
 end
 
-function Player:keyPressed(key)
+function Player:keyPressed(key, bulletList)
   if key == 'space' then
     table.insert(
       bulletList,

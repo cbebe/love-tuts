@@ -1,7 +1,7 @@
 Bullet = Object:extend()
 
 function Bullet:new(x, y)
-  self.image = love.graphics.newImage 'bullet.png'
+  self.image = love.graphics.newImage('bullet.png', nil)
   self.x = x
   self.y = y
   self.speed = 700

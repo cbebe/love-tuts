@@ -1,3 +1,5 @@
+local p, e, bulletList
+
 function love.load()
   Object = require 'classic'
   require 'player'
@@ -10,7 +12,7 @@ function love.load()
 end
 
 function love.keypressed(key)
-  p:keyPressed(key)
+  p:keyPressed(key, bulletList)
 end
 
 function love.update(dt)
@@ -31,7 +33,7 @@ function love.draw()
   p:draw()
   e:draw()
 
-  for i,v in ipairs(bulletList) do
-    v:draw(dt)
+  for _,v in ipairs(bulletList) do
+    v:draw()
   end
 end

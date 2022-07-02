@@ -1,5 +1,7 @@
+local image, frames, currentFrame
+
 function love.load()
-  image = love.graphics.newImage "jump.png"
+  image = love.graphics.newImage("jump.png", nil)
   local width, height = image:getWidth(), image:getHeight()
   frames = {}
   local frame_width, frame_height = 117, 233

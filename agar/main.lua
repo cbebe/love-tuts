@@ -1,7 +1,9 @@
+local game
+
 function love.load()
   local fileName = 'savedata.txt'
   local Player = require 'player'
-  local playerImage = love.graphics.newImage('face.png')
+  local playerImage = love.graphics.newImage('face.png', nil)
   local player1Controls = {
     up = 'up',
     left = 'left',
@@ -16,7 +18,7 @@ function love.load()
   }
   local player1 = Player(100, 100, 25, playerImage, player1Controls)
   local player2 = Player(300, 100, 25, playerImage, player2Controls)
-  local coinImage = love.graphics.newImage('dollar.png')
+  local coinImage = love.graphics.newImage('dollar.png', nil)
   game = require'game'(fileName, coinImage, {player1, player2})
 end
 

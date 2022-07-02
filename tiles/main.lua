@@ -1,7 +1,8 @@
+local image, width, height, quads, player, tilemap
 function love.load()
 
   --Load the image
-  image = love.graphics.newImage("tileset.png")
+  image = love.graphics.newImage("tileset.png", nil)
 
   --We need the full image width and height for creating the quads
   local image_width = image:getWidth()
@@ -46,13 +47,13 @@ function love.load()
   }
 
   player = {
-    image = love.graphics.newImage("player.png"),
+    image = love.graphics.newImage("player.png", nil),
     tile_x = 2,
     tile_y = 2
   }
 end
 
-function isEmpty(x, y)
+local function isEmpty(x, y)
     return tilemap[y][x] == 0
 end
 
@@ -74,9 +75,6 @@ function love.keypressed(key)
     player.tile_x = x
     player.tile_y = y
   end
-end
-
-function love.update(dt)
 end
 
 function love.draw()

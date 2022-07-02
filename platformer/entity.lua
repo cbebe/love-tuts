@@ -4,7 +4,7 @@ local Entity = Object:extend()
 function Entity:new(x, y, imagePath)
   self.x = x
   self.y = y
-  self.image = love.graphics.newImage(imagePath)
+  self.image = love.graphics.newImage(imagePath, nil)
   self.width = self.image:getWidth()
   self.height = self.image:getHeight()
 
@@ -81,7 +81,7 @@ local function handleHorizontalPushback(self, e)
   end
 end
 
-function Entity:checkResolve(e, direction)
+function Entity:checkResolve(_, _)
   return true
 end
 
