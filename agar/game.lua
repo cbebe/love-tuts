@@ -3,20 +3,7 @@ local Entity = require 'entity'
 local Game = Object:extend()
 local lume = require 'lume'
 
-function Game:new(fileName, coinImage, players)
-  self.screenCanvas = love.graphics.newCanvas(400, 600)
-  self.fileName = fileName
-  self.players = players
-  self.coinImage = coinImage
-  self.coins = {}
-  if love.filesystem.getInfo(self.fileName) then
-    self:load()
-  else
-    self:generateCoins()
-  end
-end
-
-function Game:load()
+local function loadGame(self)
   local file = love.filesystem.read(self.fileName)
   local data = lume.deserialize(file)
   for i=1,#self.players do
@@ -29,7 +16,7 @@ function Game:load()
   end
 end
 
-function Game:generateCoins()
+local function generateCoins(self)
   for i=1,25 do
     local coin = Entity(
       love.math.random(50 ,650),
@@ -41,7 +28,22 @@ function Game:generateCoins()
   end
 end
 
-function any(arr, fn)
+function Game:new(fileName, coinImage, players)
+  self.screenCanvas = love.graphics.newCanvas(400, 600)
+  self.fileName = fileName
+  self.players = players
+  self.coinImage = coinImage
+  self.coins = {}
+  if love.filesystem.getInfo(self.fileName) then
+    loadGame(self)
+  else
+    generateCoins(self)
+  end
+end
+
+
+
+local function any(arr, fn)
   for i,v in ipairs(arr) do
     if fn(v) then
       return true
@@ -64,7 +66,7 @@ function Game:update(dt)
     end
   end
   if #self.coins == 0 then
-    self:generateCoins()
+    generateCoins(self)
   end
 end
 function Game:save()
@@ -102,5 +104,6 @@ function Game:drawPlayerScreen(focus, off)
   love.graphics.setCanvas()
   love.graphics.draw(self.screenCanvas, off)
 end
+
 
 return Game

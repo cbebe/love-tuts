@@ -12,6 +12,8 @@ function Player:new(x, y, size, image, controls)
   self.score = 0
 end
 
+local down = love.keyboard.isDown
+
 function Player:update(dt)
   if self.shake.duration > 0 then
     self.shake.duration = self.shake.duration - dt
@@ -24,15 +26,15 @@ function Player:update(dt)
     end
   end
 
-  if love.keyboard.isDown(self.controls.left) then
+  if down(self.controls.left) then
     self.x = self.x - 200 * dt
-  elseif love.keyboard.isDown(self.controls.right) then
+  elseif down(self.controls.right) then
     self.x = self.x + 200 * dt
   end
 
-  if love.keyboard.isDown(self.controls.up) then
+  if down(self.controls.up) then
     self.y = self.y - 200 * dt
-  elseif love.keyboard.isDown(self.controls.down) then
+  elseif down(self.controls.down) then
     self.y = self.y + 200 * dt
   end
 end
