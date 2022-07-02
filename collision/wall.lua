@@ -1,5 +1,4 @@
 local Entity = require 'entity'
-
 local Wall = Entity:extend()
 
 function Wall:new(x, y)
